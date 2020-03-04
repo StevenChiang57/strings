@@ -115,6 +115,25 @@ char * strpbrk_(const char *cs, const char *ct){
       return cs;
     ++cs;
   }
+  return NULL;
+}
+
+char * strstr(const char *cs, const char *ct){
+  while (cs != '\0'){
+    if (strchr_(cs, *ct))
+      return ct;
+    ++ct;
+  }
+  return NULL;
+}
+
+size_t strlen(const char *s){
+  size_t length = 0;
+  while (s != '\0'){
+    ++s;
+    ++length;
+  }
+  return length;
 }
 
 void test_strcpy() {
