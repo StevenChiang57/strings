@@ -118,16 +118,31 @@ char * strpbrk_(const char *cs, const char *ct){
   return NULL;
 }
 
-char * strstr(const char *cs, const char *ct){
-  while (cs != '\0'){
-    if (strchr_(cs, *ct))
-      return ct;
-    ++ct;
+char * strstr_(const char *cs, const char *ct){
+  bool found = 0;
+  while (*s != '\0' && !found){
+    const char *p = s;
+    const char *q = t;
+    while (*p != '\0' && *q = '\0' && *p == *q){
+      p++;
+      q++
+    }
+    found = (*p == *q);
+    if (!found) { ++s;}
   }
-  return NULL;
+  // while (cs != '\0'){
+  //   // if (strchr_(cs, *ct))
+  //   //   return ct;
+  //   //++ct;
+  //   if (*cs == *ct)
+  //     if (!strcmp(cs, ct, strlen(cs)))
+  //
+  // }
+  // return NULL;
+  return *s != '\0' ? (char*)s : NULL
 }
 
-size_t strlen(const char *s){
+size_t strlen_(const char *s){
   size_t length = 0;
   while (s != '\0'){
     ++s;
@@ -135,6 +150,20 @@ size_t strlen(const char *s){
   }
   return length;
 }
+char * ptr = NULL;
+void strtok_(const char *s, const char *t){
+  if(s != NULL){ ptr = s;}
+  if(strlen(ptr) == 0) {return NULL;}
+
+  size_t prefix =  strcspn(ptr, t);
+  size_t suffix = strspn(ptr + prefix, t);
+  char* token = ptr;
+  char * q = ptr + prefix;
+  *q = '\0';
+  ptr = q + suffix;
+  return token
+}
+
 
 void test_strcpy() {
   strcpy(src, "Ask not what you can do for your country");
@@ -202,6 +231,28 @@ void test_strspn(const char *s, const char *t){
 void test_strspn(const char *s, const char *t){
   printf("\nasserting that strcspn(\"%s\", \'%s\') is correct", s, t);
   assert(strcspn_(s, t) == strcspn(s, t));
+}
+
+void test_strtok(const char* s, const char* t){
+
+  memset(dest2, 0, sizeof(dest2));
+  memset(dest, 0, sizeof(dest));
+  strcpy(dest2, s);
+  strcpy(dest, s);
+
+  printf("assert that strtok_ produces same as strtok for \"%s\"\n");
+  char *p = strtok_(dest2, t);
+  char *q = strtok(dest, t);
+  printf("%12s -- %-12s\n", p, q);
+  assert((p == q) || strcmp(p, q) == 0);
+
+  while( p!= NULL && q != NULL){
+    p = strtok_(NULL, t);
+    q = strtok(NULL, t);
+    printf("%12s -- %-12s\n", p, q);
+    assert((p == q) || strcmp(p, q) == 0);
+  }
+  printf("\n");
 }
 
 void tests_strncpy() {
